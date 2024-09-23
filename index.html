@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우울증 테스트</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">우울증 자가진단 테스트</h1>
+
+        <div class="question">
+            <h2>1. 기분이 가라앉거나, 우울하거나, 희망이 없다고 느꼈다.</h2>
+            <div class="buttons">
+                <input type="button" onclick='count(1, 0)' value="없음"/>
+                <input type="button" onclick='count(1, 1)' value="2-6일"/>
+                <input type="button" onclick='count(1, 2)' value="7-12일"/>
+                <input type="button" onclick='count(1, 3)' value="거의 매일"/>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2>2. 평소 하던 일에 대한 흥미가 없어지거나 즐거움을 느끼지 못했다.</h2>
+            <div class="buttons">
+                <input type="button" onclick='count(2, 0)' value="없음"/>
+                <input type="button" onclick='count(2, 1)' value="2-6일"/>
+                <input type="button" onclick='count(2, 2)' value="7-12일"/>
+                <input type="button" onclick='count(2, 3)' value="거의 매일"/>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2>3. 잠들기가 어렵거나 자주 깼다/혹은 너무 많이 잤다.</h2>
+            <div class="buttons">
+                <input type="button" onclick='count(3, 0)' value="없음"/>
+                <input type="button" onclick='count(3, 1)' value="2-6일"/>
+                <input type="button" onclick='count(3, 2)' value="7-12일"/>
+                <input type="button" onclick='count(3, 3)' value="거의 매일"/>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2>4. 평소보다 식욕이 줄었다/혹은 평소보다 많이 먹었다.</h2>
+            <div class="buttons">
+                <input type="button" onclick='count(4, 0)' value="없음"/>
+                <input type="button" onclick='count(4, 1)' value="2-6일"/>
+                <input type="button" onclick='count(4, 2)' value="7-12일"/>
+                <input type="button" onclick='count(4, 3)' value="거의 매일"/>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2>5. 다른 사람들이 눈치 챌 정도로 평소보다 말과 행동이 느려졌다/혹은 너무 안절부절 못해서 가만히 앉아 있을 수 없었다.</h2>
+            <div class="buttons">
+                <input type="button" onclick='count(5, 0)' value="없음"/>
+                <input type="button" onclick='count(5, 1)' value="2-6일"/>
+                <input type="button" onclick='count(5, 2)' value="7-12일"/>
+                <input type="button" onclick='count(5, 3)' value="거의 매일"/>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2>6. 피곤하고 기운이 없었다.</h2>
+            <div class="buttons">
+                <input type="button" onclick='count(6, 0)' value="없음"/>
+                <input type="button" onclick='count(6, 1)' value="2-6일"/>
+                <input type="button" onclick='count(6, 2)' value="7-12일"/>
+                <input type="button" onclick='count(6, 3)' value="거의 매일"/>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2>7. 내가 잘못 했거나, 실패했다는 생각이 들었다/혹은 자신과 가족을 실망시켰다고 생각했다.</h2>
+            <div class="buttons">
+                <input type="button" onclick='count(7, 0)' value="없음"/>
+                <input type="button" onclick='count(7, 1)' value="2-6일"/>
+                <input type="button" onclick='count(7, 2)' value="7-12일"/>
+                <input type="button" onclick='count(7, 3)' value="거의 매일"/>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2>8. 신문을 읽거나 TV를 보는 것과 같은 일상적인 일에도 집중 할 수가 없었다.</h2>
+            <div class="buttons">
+                <input type="button" onclick='count(8, 0)' value="없음"/>
+                <input type="button" onclick='count(8, 1)' value="2-6일"/>
+                <input type="button" onclick='count(8, 2)' value="7-12일"/>
+                <input type="button" onclick='count(8, 3)' value="거의 매일"/>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2>9. 차라리 죽는 것이 더 낫겠다고 생각했다/혹은 자해할 생각을 했다.</h2>
+            <div class="buttons">
+                <input type="button" onclick='count(9, 0)' value="없음"/>
+                <input type="button" onclick='count(9, 1)' value="2-6일"/>
+                <input type="button" onclick='count(9, 2)' value="7-12일"/>
+                <input type="button" onclick='count(9, 3)' value="거의 매일"/>
+            </div>
+        </div>
+
+        <div class="result-container">
+            <div id="result">0</div> <!-- 실시간 결과 표시 -->
+            <button onclick="calculateResult()">제출하기</button>
+        </div>
+    </div>
+
+    <script>
+        let scores = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+            8: 0,
+            9: 0
+        };
+
+        // 점수를 카운트하고 실시간으로 점수를 표시하는 함수
+        function count(questionNumber, score) {
+            scores[questionNumber] = score;
+            updateResult();
+        }
+
+        // 총 점수를 실시간으로 업데이트하는 함수
+        function updateResult() {
+            let totalScore = 0;
+            for (let key in scores) {
+                totalScore += scores[key];
+            }
+            document.getElementById('result').textContent = totalScore;
+        }
+
+        // 총 점수를 계산하고 결과를 보여주는 함수
+        function calculateResult() {
+            let totalScore = 0;
+            for (let key in scores) {
+                totalScore += scores[key];
+            }
+            showAlert(totalScore);
+        }
+
+        // 점수에 따른 결과 경고창
+        function showAlert(score) {
+            if (score >= 0 && score <= 4) {
+                alert("0~4점: 우울하지 않음");
+            } else if (score >= 5 && score <= 9) {
+                alert("5~9점: 가벼운 우울");
+            } else if (score >= 10 && score <= 19) {
+                alert("10~19점: 중간정도의 우울 (전문기관 방문 권장)");
+            } else if (score >= 20) {
+                alert("20~27점: 심한 우울 (전문기관 치료 필요)");
+            }
+        }
+    </script>
+</body>
+</html>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+}
+
+.title {
+    font-size: 32px;
+    color: #4a90e2;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.question h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.buttons input {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.buttons input:hover {
+    background-color: #357abd;
+}
+
+.result-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#result {
+    font-size: 24px;
+    color: #4a90e2;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #357abd;
+}
+</style>
